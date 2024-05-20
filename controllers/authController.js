@@ -1,5 +1,4 @@
 require('dotenv').config({ path: `${process.cwd()}/.env` })
-
 const user = require('../db/models/user')
 const catchErrorAsync = require('../utils/catchErrorAsync')
 const jwt = require('jsonwebtoken')
