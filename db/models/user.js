@@ -12,7 +12,7 @@ module.exports = sequelize.define('user', {
     type: DataTypes.INTEGER
   },
   userType: {
-    type: DataTypes.ENUM("Super Admin", "Creator", "Student")
+    type: DataTypes.ENUM("Super Admin", "Customer")
   },
   firstName: {
     type: DataTypes.STRING,
