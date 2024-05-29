@@ -68,23 +68,21 @@ const updateProduct = catchErrorAsync(async (req, res, next) => {
     const { id } = req.params
     const productData = req.body
 
-    const  result = await product.findOne({ where: id })
+    const result = await product.findOne({ where: { id: id } })
     if(!result) return next(new AppError('Invalid product id'), 400)
 
-    result.dataValues = productData
-
-    const updatedResult = await result.save()
+    await result.update(productData)
 
     return res.status(200).json({
         status: 'Product updated successfully',
-        data: updatedResult
+        data: result
     })
 })
 
 const deleteProduct = catchErrorAsync(async (req, res, next) => {
     const { id } = req.params
 
-    const result = await product.destroy({ where: id })
+    const result = await product.destroy({ where: { id: id}, force: true })
     if(!result) return next(new AppError('failed to delete product'), 400)
 
     return res.status(200).json({
