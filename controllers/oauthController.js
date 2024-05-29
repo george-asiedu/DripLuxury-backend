@@ -5,7 +5,7 @@ const catchErrorAsync = require('../utils/catchErrorAsync')
 
 const GOOGLE_OAUTH_URL = process.env.GOOGLE_OAUTH_URL
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
-const GOOGLE_CALLBACK_URL = "http%3A//localhost:4200"
+const GOOGLE_CALLBACK_URL = "https%3A//dripluxury-clothing.vercel.app" || "http%3A//localhost:4200"
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
 const GOOGLE_ACCESS_TOKEN_URL = process.env.GOOGLE_ACCESS_TOKEN_URL
 const GOOGLE_OAUTH_SCOPES = [
@@ -28,7 +28,7 @@ const handleCallback = catchErrorAsync(async (req, res) => {
         code,
         client_id: GOOGLE_CLIENT_ID,
         client_secret: GOOGLE_CLIENT_SECRET,
-        redirect_uri: "http://localhost:4200",
+        redirect_uri: "https%3A//dripluxury-clothing.vercel.app" || "http%3A//localhost:4200",
         grant_type: 'authorization_code'
     }
     console.log(data)
@@ -53,7 +53,7 @@ const handleCallback = catchErrorAsync(async (req, res) => {
         user = await User.create({ email, firstName, lastName })
     }
     const token = user.generateToken()
-    res.redirect(`http://localhost:4200/login?token=${token}`);
+    res.redirect(`https://dripluxury-clothing.vercel.app/login?token=${token}` || `http://localhost:4200/login?token=${token}`)
     res.status(token.status).json({ user, token })
 })
 
