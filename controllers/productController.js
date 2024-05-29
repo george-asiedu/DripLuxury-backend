@@ -3,12 +3,10 @@ const appError = require('../utils/appError')
 const product = require('../db/models/products')
 const AppError = require("../utils/appError");
 
-const createProduct = catchErrorAsync(async (req, res, next) => {
-    const { name, productImage, price, description, category, tags, rating, dressStyle, colors, size } = req.body
+const createSingleProduct = catchErrorAsync(async (req, res, next) => {
+    const productsData = req.body
 
-    const newProduct = await product.create({
-        name, productImage, price, description, category, tags, rating, dressStyle, colors, size
-    })
+    const newProduct = await product.create(productsData)
 
     if (!newProduct) return next(new appError('failed to create product'), 400)
 
@@ -17,6 +15,30 @@ const createProduct = catchErrorAsync(async (req, res, next) => {
 
     return res.status(201).json({
         status: 'Product created successfully',
+        data: result
+    })
+})
+
+const createManyProduct = catchErrorAsync(async (req, res, next) => {
+    const productsData = req.body
+
+    if (!Array.isArray(productsData) || productsData.length === 0) {
+        return next(new appError('Please provide an array of products', 400))
+    }
+
+    const newProducts = await product.bulkCreate(productsData)
+
+    if (!newProducts) return next(new appError('Failed to create products', 400))
+
+    const result = newProducts.map(prod => {
+        const productJSON = prod.toJSON()
+        delete productJSON.deletedAt
+        return productJSON
+    })
+
+    return res.status(201).json({
+        status: 'Products created successfully',
+        result: result.length,
         data: result
     })
 })
@@ -44,21 +66,12 @@ const getProductById = catchErrorAsync(async (req, res, next) => {
 
 const updateProduct = catchErrorAsync(async (req, res, next) => {
     const { id } = req.params
-    const { name, productImage, price, description, category, tags, rating, dressStyle, colors, size } = req.body
+    const productData = req.body
 
     const  result = await product.findOne({ where: id })
     if(!result) return next(new AppError('Invalid product id'), 400)
 
-    result.name = name
-    result.productImage = productImage
-    result.price = price
-    result.description = description
-    result.category = category
-    result.rating = rating
-    result.dressStyle = dressStyle
-    result.colors = colors
-    result.size = size
-    result.tags = tags
+    result.dataValues = productData
 
     const updatedResult = await result.save()
 
@@ -80,4 +93,4 @@ const deleteProduct = catchErrorAsync(async (req, res, next) => {
     })
 })
 
-module.exports = { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct }
+module.exports = { createSingleProduct ,createManyProduct, getAllProducts, getProductById, updateProduct, deleteProduct }
