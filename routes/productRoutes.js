@@ -4,7 +4,7 @@ const { createSingleProduct ,createManyProduct, getAllProducts, getProductById, 
 
 router.route('/create-many').post(authentication, createManyProduct)
 router.route('/create-single').post(authentication, createSingleProduct)
-router.route('/products').get(getAllProducts)
+router.route('/getProducts').get(getAllProducts)
 router.route('/:id').get(authentication, getProductById)
 router.route('/:id').patch(authentication, updateProduct)
 router.route('/:id').delete(authentication, deleteProduct)
