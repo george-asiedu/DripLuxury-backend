@@ -8,6 +8,18 @@ module.exports = sequelize.define('product', {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      type: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+              notNull: {
+                  msg: 'type cannot be null',
+              },
+              notEmpty: {
+                  msg: 'type cannot be empty',
+              },
+          },
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,6 +47,36 @@ module.exports = sequelize.define('product', {
           },
         },
       },
+    imageOverlay: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'product image overlay cannot be null',
+            },
+            notEmpty: {
+                msg: 'product image overlay cannot be empty',
+            },
+            isUrl: {
+                msg: 'Invalid product image overlay url string',
+            },
+        },
+    },
+    detailsImage: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'Details image cannot be null',
+            },
+            notEmpty: {
+                msg: 'Details image cannot be empty',
+            },
+            isUrl: {
+                msg: 'Invalid details image url string',
+            },
+        },
+    },
       price: {
         type: DataTypes.DECIMAL,
         allowNull: false,
@@ -47,18 +89,36 @@ module.exports = sequelize.define('product', {
           },
         },
       },
-      description: {
+    shortDescription: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'description cannot be null',
+            msg: 'short description cannot be null',
           },
           notEmpty: {
-            msg: 'description cannot be empty',
+            msg: 'short description cannot be empty',
           },
         },
       },
+    longDescription: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'long description cannot be null',
+            },
+            notEmpty: {
+                msg: 'long description cannot be empty',
+            },
+        },
+    },
+    washingInstructions: {
+        type: DataTypes.STRING
+    },
+    highlights: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+    },
       category: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -95,31 +155,7 @@ module.exports = sequelize.define('product', {
           },
         },
       },
-      dressStyle: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'dress style cannot be null',
-          },
-          notEmpty: {
-            msg: 'dress style must not be empty',
-          },
-        },
-      },
-      colors: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'color cannot be null',
-          },
-          notEmpty: {
-            msg: 'color must not be empty',
-          },
-        },
-      },
-      size: {
+      sizes: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
         validate: {
@@ -127,10 +163,22 @@ module.exports = sequelize.define('product', {
             msg: 'size cannot be null',
           },
           notEmpty: {
-            msg: 'size mus not be empty',
+            msg: 'size must not be empty',
           },
         },
       },
+    composition: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'composition cannot be null',
+            },
+            notEmpty: {
+                msg: 'composition must not be empty',
+            },
+        },
+    },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
