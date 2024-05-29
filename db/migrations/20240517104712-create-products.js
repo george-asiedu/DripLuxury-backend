@@ -9,17 +9,35 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      type: {
+        type: Sequelize.STRING,
+      },
       name: {
         type: Sequelize.STRING
       },
       productImage: {
         type: Sequelize.STRING
       },
+      imageOverlay: {
+        type: Sequelize.STRING
+      },
+      detailsImage: {
+        type: Sequelize.STRING
+      },
       price: {
         type: Sequelize.DECIMAL
       },
-      description: {
+      shortDescription: {
         type: Sequelize.TEXT
+      },
+      longDescription: {
+        type: Sequelize.TEXT
+      },
+      washingInstructions: {
+        type: Sequelize.STRING
+      },
+      highlights: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       category: {
         type: Sequelize.STRING
@@ -30,13 +48,10 @@ module.exports = {
       rating: {
         type: Sequelize.DECIMAL
       },
-      dressStyle: {
-        type: Sequelize.STRING
-      },
-      colors: {
+      sizes: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
-      size: {
+      composition: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
       createdAt: {
