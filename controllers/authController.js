@@ -172,4 +172,11 @@ const restrictTo = (...userType) => {
 }
 
 
-module.exports = { signup, login, sendResetPasswordCode, resetPasswordWithCode, authentication, restrictTo }
+module.exports = {
+    signup,
+    login,
+    sendResetPasswordCode,
+    resetPasswordWithCode,
+    authentication,
+    restrictTo
+}
