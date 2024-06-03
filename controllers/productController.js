@@ -82,7 +82,7 @@ const updateProduct = catchErrorAsync(async (req, res, next) => {
 const deleteProduct = catchErrorAsync(async (req, res, next) => {
     const { id } = req.params
 
-    const result = await product.destroy({ where: { id: id}, force: true })
+    const result = await product.destroy({ where: { id: id }, force: true })
     if(!result) return next(new AppError('failed to delete product'), 400)
 
     return res.status(200).json({
@@ -91,4 +91,11 @@ const deleteProduct = catchErrorAsync(async (req, res, next) => {
     })
 })
 
-module.exports = { createSingleProduct ,createManyProduct, getAllProducts, getProductById, updateProduct, deleteProduct }
+module.exports = {
+    createSingleProduct ,
+    createManyProduct,
+    getAllProducts,
+    getProductById,
+    updateProduct,
+    deleteProduct
+}
